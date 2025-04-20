@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "target": "ES2024",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "outDir": "./dist",
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["./src/*"],
+            "@config/*": ["./src/config/*"],
+            "@controllers/*": ["./src/controllers/*"],
+            "@middlewares/*": ["./src/middlewares/*"],
+            "@models/*": ["./src/models/*"],
+            "@routes/*": ["./src/routes/*"],
+            "@services/*": ["./src/services/*"],
+            "@utils/*": ["./src/utils/*"]
+        }
+    },
+    "include": ["src"]
+}

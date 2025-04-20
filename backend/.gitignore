@@ -1,0 +1,30 @@
+# Dependencias
+node_modules/
+dist/
+
+# Archivos de entorno
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Configuraciones IDE/Editor
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# TypeScript y compilación
+*.tsbuildinfo
