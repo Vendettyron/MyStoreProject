@@ -10,16 +10,7 @@
         "outDir": "./dist",
         "skipLibCheck": true,
         "baseUrl": ".",
-        "paths": {
-            "@/*": ["./src/*"],
-            "@config/*": ["./src/config/*"],
-            "@controllers/*": ["./src/controllers/*"],
-            "@middlewares/*": ["./src/middlewares/*"],
-            "@models/*": ["./src/models/*"],
-            "@routes/*": ["./src/routes/*"],
-            "@services/*": ["./src/services/*"],
-            "@utils/*": ["./src/utils/*"]
-        }
     },
-    "include": ["src"]
+    "include": ["src"],
+    "exclude": ["node_modules"]
 }

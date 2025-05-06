@@ -1,30 +1,39 @@
-# Dependencias
+# Dependencias y módulos
 node_modules/
-dist/
+.pnpm-store/
 
-# Archivos de entorno
+# Entorno y variables de entorno
 .env
 .env.local
 .env.development
 .env.test
 .env.production
 
-# Logs
-*.log
+# Logs y archivos de desarrollo
 logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Configuraciones IDE/Editor
+# Directorios de compilación / distribución
+dist/
+build/
+.out/
+.next/
+
+# Configuraciones de IDE y editores
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Archivos de sistema
+*.swp
+*.swo
 .DS_Store
-Thumbs.db
 
-# TypeScript y compilación
-*.tsbuildinfo
+# Archivos de cobertura (si usas testing)
+coverage/
+.nyc_output/
+
+# Configuraciones específicas de pnpm
+.pnpm/
+.pnpmfile.cjs
