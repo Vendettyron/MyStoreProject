@@ -1,19 +1,20 @@
 import { AppError } from "src/shared/utils/appError";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
+import type { LoginSchemaDTO } from "src/shared/schemas/loginShema";
 import type { RegisterSchemaDTO } from "../schemas/schemas";
 import supabase from "src/config/supabase";
-import bcrypt from "bcrypt";
+
 
 export async function registerEmployeeService(data: RegisterSchemaDTO) {
 	const {
-		firstName,
-		middleName,
-		lastName,
-		secondLastName,
+		first_name,
+		middle_name,
+		last_name,
+		second_last_name,
 		address,
 		phone,
-		emailWork,
-		emailPersonal,
+		email_work,
+		email_personal,
 		password,
 		id_role,
 		id_position,
@@ -22,12 +23,11 @@ export async function registerEmployeeService(data: RegisterSchemaDTO) {
 		salary,
 	} =data
 
-	const hashedPassword = await bcrypt.hash(password, 10);
 
 	const { data: authUser, error: authError } =
 		await supabase.auth.admin.createUser({
-			email: emailWork,
-			password: hashedPassword,
+			email: email_work,
+			password: password,
 			email_confirm: false,
 		});
 
@@ -36,14 +36,14 @@ export async function registerEmployeeService(data: RegisterSchemaDTO) {
 	const { data: spResult, error: spError } = await supabase.rpc(
 		"fn_employee_register",
 		{
-			first_name: firstName,
-			middle_name: middleName,
-			last_name: lastName,
-			second_last_name: secondLastName,
+			first_name,
+			middle_name,
+			last_name,
+			second_last_name,
 			address,
 			phone,
-			email_work: emailWork,
-			email_personal: emailPersonal,
+			email_work,
+			email_personal,
 			id_role,
 			id_position,
 			id_department,
@@ -72,3 +72,25 @@ export async function registerEmployeeService(data: RegisterSchemaDTO) {
 		message: resultmessage,
 	};
 }
+
+export async function loginService(data: LoginSchemaDTO) {
+	const { email, password } = data;
+
+	const { data: authUser, error: authError } = await supabase.auth.signInWithPassword({
+		email,
+		password,
+	});
+
+	console.log("auth user:",authUser)
+	console.log("auth error:",authError)
+
+	if (authError) throw new AppError("Correo o contrasena invalidos", HttpStatus.UNAUTHORIZED_401);
+
+	if (!authUser.user) throw new AppError("Usuario no encontrado", HttpStatus.UNAUTHORIZED_401);
+
+	return {
+		success: true,
+		message: "Inicio de sesión exitoso",
+	};
+};
+
