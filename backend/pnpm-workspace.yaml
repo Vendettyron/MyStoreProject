@@ -2,3 +2,4 @@ ignoredBuiltDependencies:
   - esbuild
 onlyBuiltDependencies:
   - '@biomejs/biome'
+  - bcrypt
