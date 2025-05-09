@@ -3,7 +3,7 @@ import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import type { LoginSchemaDTO } from "src/shared/schemas/loginShema";
 import type { RegisterSchemaDTO } from "../schemas/schemas";
 import { Status } from "src/shared/dictionaries/statusDictionary";
-import { Role } from "src/shared/dictionaries/simpleRoleDictionary"; // Replace 'AdminRole' with the correct exported member
+import { Role } from "src/shared/dictionaries/simpleRoleDictionary";
 import supabase from "src/config/supabase";
 
 export async function registerEmployeeService(data: RegisterSchemaDTO) {
@@ -29,14 +29,14 @@ export async function registerEmployeeService(data: RegisterSchemaDTO) {
 			email: email_work,
 			password: password,
 			user_metadata: {
-				app_role: Role.ADMIN, // Replace 'AdminRole' with the correct member if necessary
+				app_role: Role.ADMIN,
 			},
 			email_confirm: false,
 		});
 
 	if (authError)
 		throw new AppError(
-			"Error al crear el usuario en Auth",
+			"Error al crear el usuario en Auth si aqui",
 			HttpStatus.INTERNAL_SERVER_ERROR_500,
 		);
 
@@ -91,6 +91,8 @@ export async function loginService(data: LoginSchemaDTO) {
 			email,
 			password,
 		});
+
+	console.log(authUser.session?.access_token);
 
 	if (authError)
 		throw new AppError(
