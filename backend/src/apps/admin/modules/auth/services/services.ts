@@ -38,6 +38,7 @@ export async function registerEmployeeService(data: RegisterSchemaDTO) {
 		throw new AppError(
 			"Error al crear el usuario en Auth si aqui",
 			HttpStatus.INTERNAL_SERVER_ERROR_500,
+			authError.message,
 		);
 
 	const { data: spResult, error: spError } = await supabase.rpc(

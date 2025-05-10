@@ -16,7 +16,6 @@ export const roleMiddleware =
 		try {
 			const authHeader = request.headers.authorization;
 
-			// 1. Verificar token existente
 			if (!authHeader?.startsWith("Bearer ")) {
 				throw new AppError(
 					"Token no proporcionado",
@@ -37,6 +36,8 @@ export const roleMiddleware =
 			if (appRole !== expectedRole) {
 				throw new AppError("Permisos insuficientes", HttpStatus.FORBIDDEN_403);
 			}
+
+			console.log("User ID:", user.id);
 
 			request.user = user.id as string;
 		} catch (err) {

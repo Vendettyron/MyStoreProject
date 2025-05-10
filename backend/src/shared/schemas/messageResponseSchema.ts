@@ -1,8 +1,8 @@
 import { Type } from "@sinclair/typebox";
 
-export const successResponseSchema = Type.Object({
+export const basicResponseSchema = Type.Object({
 	success: Type.Boolean(),
-	message: Type.String(),
-	data: Type.Optional(Type.Any()),
-	userId: Type.Optional(Type.String()),
+	message: Type.Optional(Type.String()),
+	error: Type.Optional(Type.String()),
+	data: Type.Optional(Type.Unknown()), // Opcional para respuestas con datos
 });

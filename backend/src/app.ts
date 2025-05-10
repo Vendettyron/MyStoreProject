@@ -1,4 +1,6 @@
 import Fastify from "fastify";
+import { handleError } from "./shared/utils/handleError";
+import { AppError } from "./shared/utils/appError";
 import type { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import Cors from "./config/cors";
 import Helmet from "./config/helmet";
@@ -45,7 +47,6 @@ const app = Fastify({
 	},
 }).withTypeProvider<TypeBoxTypeProvider>();
 
-
 app.addHook("onSend", async (request, reply, payload) => {
 	(reply.raw as { payload?: string }).payload =
 		typeof payload === "string" ? payload : JSON.stringify(payload);
@@ -59,4 +60,20 @@ app.addHook("onSend", async (request, reply, payload) => {
 
 app.register(v1Routes, { prefix: "/api/v1" });
 
+app.setErrorHandler((error, request, reply) => {
+	app.log.error(error);
+
+	if (error instanceof AppError) {
+		return reply.status(error.statusCode).send({
+			success: false,
+			message: error.message,
+		});
+	}
+
+	return reply.status(500).send({
+		success: false,
+		message: "Ocurrió un error inesperado",
+		error: error.message,
+	});
+});
 export default app;
