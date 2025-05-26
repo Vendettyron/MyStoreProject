@@ -1,33 +1,60 @@
 import supabaseConnection from "../db/supabaseConection";
-import type { ProductoSchemaDTO } from "../../shared/schemas/producto.schema";
+import type { Producto } from "../../domain/repositories/producto/productoEntity";
 import { AppError } from "../../../../shared/utils/appError";
 import { HttpStatus } from "../../../../shared/dictionaries/httpStatusDictionary";
-import type { ICrearProuctoRepository } from "../../domain/repositories/prroducto/crearRepository";
+import type { IProductoRepository } from "../../domain/repositories/producto/productoRepository";
 
-export class CrearProductoRepository implements ICrearProuctoRepository {
+export class ProductoRepository implements IProductoRepository {
 	async crearProducto(
-		data: ProductoSchemaDTO,
+		data: Producto,
 	): Promise<{ success: boolean; message: string }> {
-		const { nombre, descripcion, unidad } = data;
+		const { nombre, descripcion, unidades } = data;
 
-		const { error } = await supabaseConnection.from("productos").insert({
-			nombre,
-			descripcion,
-			unidad,
-			fecha_creacion: new Date().toISOString(),
-		});
+		const { error: spError } = await supabaseConnection.rpc(
+			"fn_insert_productos",
+			{
+				p_nombre: nombre,
+				p_descripcion: descripcion,
+				p_unidades: unidades,
+			},
+		);
 
-		if (error) {
+		if (spError) {
 			throw new AppError(
 				"Error al registrar producto",
 				HttpStatus.INTERNAL_SERVER_ERROR_500,
-				error.message,
+				spError.message,
 			);
 		}
 
 		return {
 			success: true,
 			message: "Producto registrado exitosamente",
+		};
+	}
+
+	async obtenerProductos(): Promise<{
+		success: boolean;
+		message: string;
+		data?: object;
+	}> {
+		console.log("Obteniendo productos desde la base de datos...");
+		const { error: spError, data: spData } = await supabaseConnection.rpc(
+			"fn_get_productos_all",
+		);
+
+		if (spError) {
+			throw new AppError(
+				"Error al obtener productos",
+				HttpStatus.INTERNAL_SERVER_ERROR_500,
+				spError.message,
+			);
+		}
+
+		return {
+			success: true,
+			message: "Producto registrado exitosamente",
+			data: spData,
 		};
 	}
 }

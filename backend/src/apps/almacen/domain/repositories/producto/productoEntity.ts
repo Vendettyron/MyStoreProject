@@ -1,0 +1,16 @@
+export class Producto {
+	constructor(
+		public readonly nombre: string,
+		public readonly descripcion: string | null,
+		public readonly unidades: number,
+		public readonly fechaCreacion?: Date,
+	) {
+		if (!nombre || nombre.trim().length === 0) {
+			throw new Error("El nombre del producto es obligatorio.");
+		}
+
+		if (unidades < 0) {
+			throw new Error("Las unidades no pueden ser negativas.");
+		}
+	}
+}
