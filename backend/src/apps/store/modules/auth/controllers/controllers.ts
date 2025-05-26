@@ -2,7 +2,7 @@ import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { RegisterClientSchemaDTO } from "../schemas/registerClientSchema";
 import { registerClientService } from "../services/services";
-import { handleControllerError } from "src/shared/utils/handleControllerError";
+import { handleControllerError } from "src/shared/utils/handleError";
 
 export const registerClient = async (
 	request: FastifyRequest<{ Body: RegisterClientSchemaDTO }>,
@@ -11,7 +11,9 @@ export const registerClient = async (
 	try {
 		const result = await registerClientService(request.body);
 		reply
-			.status(result.success ? HttpStatus.CREATED_201 : HttpStatus.BAD_REQUEST_400)
+			.status(
+				result.success ? HttpStatus.CREATED_201 : HttpStatus.BAD_REQUEST_400,
+			)
 			.send({ success: true, message: result.message });
 	} catch (error) {
 		handleControllerError(error, reply);
