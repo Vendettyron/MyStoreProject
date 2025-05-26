@@ -1,45 +1,25 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import supabase from "src/config/supabase";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import { AppError } from "../utils/appError";
 import { handleError } from "../utils/handleError";
 
-declare module "fastify" {
-	interface FastifyRequest {
-		user?: string;
-	}
-}
-
 export const roleMiddleware =
-	(expectedRole: number) =>
+	(expectedRole: string | number) =>
 	async (request: FastifyRequest, reply: FastifyReply) => {
 		try {
-			const authHeader = request.headers.authorization;
-
-			if (!authHeader?.startsWith("Bearer ")) {
+			const user = request.user;
+			if (!user || !user.appRole) {
 				throw new AppError(
-					"Token no proporcionado",
-					HttpStatus.UNAUTHORIZED_401,
+					"Rol no encontrado en el usuario",
+					HttpStatus.FORBIDDEN_403,
 				);
 			}
-
-			const token = authHeader.split(" ")[1];
-			const { data, error } = await supabase.auth.getUser(token);
-
-			if (error || !data.user) {
-				throw new AppError("Token inválido", HttpStatus.UNAUTHORIZED_401);
+			if (user.appRole !== expectedRole) {
+				throw new AppError(
+					"Permisos insuficientes (rol)",
+					HttpStatus.FORBIDDEN_403,
+				);
 			}
-
-			const user = data.user;
-			const appRole = user.user_metadata?.app_role;
-
-			if (appRole !== expectedRole) {
-				throw new AppError("Permisos insuficientes", HttpStatus.FORBIDDEN_403);
-			}
-
-			console.log("User ID:", user.id);
-
-			request.user = user.id as string;
 		} catch (err) {
 			handleError(err, reply);
 		}

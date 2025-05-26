@@ -1,7 +1,7 @@
 import { AppError } from "src/shared/utils/appError";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import { Status } from "src/shared/dictionaries/statusDictionary";
-import { Role } from "src/shared/dictionaries/simpleRoleDictionary";
+import { Role } from "src/shared/dictionaries/roles&permissionsDictionary";
 import type { RegisterClientSchemaDTO } from "../schemas/registerClientSchema";
 import supabase from "src/config/supabase";
 

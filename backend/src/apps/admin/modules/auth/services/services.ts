@@ -3,7 +3,7 @@ import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import type { LoginSchemaDTO } from "src/shared/schemas/loginShema";
 import type { RegisterSchemaDTO } from "../schemas/schemas";
 import { Status } from "src/shared/dictionaries/statusDictionary";
-import { Role } from "src/shared/dictionaries/simpleRoleDictionary";
+import { role } from "src/shared/dictionaries/roles&permissionsDictionary";
 import supabase from "src/config/supabase";
 
 export async function registerEmployeeService(data: RegisterSchemaDTO) {
@@ -29,7 +29,7 @@ export async function registerEmployeeService(data: RegisterSchemaDTO) {
 			email: email_work,
 			password: password,
 			user_metadata: {
-				app_role: Role.ADMIN,
+				app_role: role.ADMIN,
 			},
 			email_confirm: false,
 		});
@@ -93,8 +93,6 @@ export async function loginService(data: LoginSchemaDTO) {
 			password,
 		});
 
-	console.log(authUser.session?.access_token);
-
 	if (authError)
 		throw new AppError(
 			"Correo o contrasena invalidos",
@@ -106,6 +104,6 @@ export async function loginService(data: LoginSchemaDTO) {
 
 	return {
 		success: true,
-		message: "Inicio de sesión exitoso",
+		message: authUser.session?.access_token,
 	};
 }
