@@ -1,5 +1,5 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
-import supabase from "src/config/supabase";
+import supabaseConnection from "../db/supabaseConection";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import { AppError } from "../../../../shared/utils/appError";
 import { handleError } from "../../../../shared/utils/handleError";
@@ -18,7 +18,7 @@ export const authMiddleware =
 		try {
 			const authHeader = request.headers.authorization;
 
-			console.log("Authorization header:", authHeader);
+			console.log("Authorization header en fabrica:", authHeader);
 
 			if (!authHeader?.startsWith("Bearer ")) {
 				throw new AppError(
@@ -28,7 +28,7 @@ export const authMiddleware =
 			}
 
 			const token = authHeader.split(" ")[1];
-			const { data, error } = await supabase.auth.getUser(token);
+			const { data, error } = await supabaseConnection.auth.getUser(token);
 
 			if (error || !data.user) {
 				throw new AppError("Token inválido", HttpStatus.UNAUTHORIZED_401);

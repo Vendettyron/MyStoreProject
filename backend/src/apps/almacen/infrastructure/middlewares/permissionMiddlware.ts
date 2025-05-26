@@ -9,6 +9,9 @@ export const permissionMiddleware =
 	async (request: FastifyRequest, reply: FastifyReply) => {
 		try {
 			const user = request.user;
+
+			console.log("User data in permission middleware:", user);
+
 			if (!user || !user.id) {
 				throw new AppError(
 					"No se ha encontrado el usuario autenticado",

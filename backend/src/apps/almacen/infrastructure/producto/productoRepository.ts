@@ -38,7 +38,6 @@ export class ProductoRepository implements IProductoRepository {
 		message: string;
 		data?: object;
 	}> {
-		console.log("Obteniendo productos desde la base de datos...");
 		const { error: spError, data: spData } = await supabaseConnection.rpc(
 			"fn_get_productos_all",
 		);
@@ -53,7 +52,7 @@ export class ProductoRepository implements IProductoRepository {
 
 		return {
 			success: true,
-			message: "Producto registrado exitosamente",
+			message: "Productos obtenidos exitosamente",
 			data: spData,
 		};
 	}

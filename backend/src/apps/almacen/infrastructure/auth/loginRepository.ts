@@ -25,6 +25,9 @@ export class LoginRepository implements ILoginRepository {
 		return {
 			success: true,
 			message: "Login exitoso",
+			data: {
+				token: authUser.session.access_token,
+			},
 		};
 	}
 }

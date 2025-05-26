@@ -2,6 +2,11 @@ import type { FastifyInstance } from "fastify";
 import { productoSchema } from "../../../shared/schemas/producto.schema";
 import { basicResponseSchema } from "src/shared/schemas/messageResponseSchema";
 import { obtenerProductosSchema } from "src/apps/almacen/shared/schemas/productos/obtenerProductos.schema";
+import { authMiddleware } from "src/apps/almacen/infrastructure/middlewares/authMiddleware";
+import { roleMiddleware } from "src/apps/almacen/infrastructure/middlewares/roleMiddleware";
+import { permissionMiddleware } from "src/apps/almacen/infrastructure/middlewares/permissionMiddlware";
+import { rol } from "src/apps/almacen/shared/diccionario/rolDiccionario";
+
 import {
 	createProductoController,
 	obtenerProductosController,
@@ -16,6 +21,11 @@ export default async function productoRoutes(app: FastifyInstance) {
 				500: basicResponseSchema,
 			},
 		},
+		preHandler: [
+			authMiddleware(),
+			roleMiddleware(rol.ADMIN),
+			permissionMiddleware(1),
+		],
 		handler: createProductoController,
 	});
 
@@ -26,6 +36,11 @@ export default async function productoRoutes(app: FastifyInstance) {
 				500: basicResponseSchema,
 			},
 		},
+		preHandler: [
+			authMiddleware(),
+			roleMiddleware(rol.ADMIN),
+			permissionMiddleware(1),
+		],
 		handler: obtenerProductosController,
 	});
 
