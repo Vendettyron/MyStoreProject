@@ -4,8 +4,9 @@ import { basicResponseSchema } from "src/shared/schemas/messageResponseSchema";
 import { obtenerProductosSchema } from "src/apps/almacen/shared/schemas/productos/obtenerProductos.schema";
 import { authMiddleware } from "src/apps/almacen/infrastructure/middlewares/authMiddleware";
 import { roleMiddleware } from "src/apps/almacen/infrastructure/middlewares/roleMiddleware";
-import { permissionMiddleware } from "src/apps/almacen/infrastructure/middlewares/permissionMiddlware";
+import { permisoMiddleware } from "src/apps/almacen/infrastructure/middlewares/permissionMiddlware";
 import { rol } from "src/apps/almacen/shared/diccionario/rolDiccionario";
+import { permiso } from "src/apps/almacen/shared/diccionario/permisosDiccionario";
 
 import {
 	createProductoController,
@@ -24,7 +25,7 @@ export default async function productoRoutes(app: FastifyInstance) {
 		preHandler: [
 			authMiddleware(),
 			roleMiddleware(rol.ADMIN),
-			permissionMiddleware(1),
+			permisoMiddleware(permiso.CREAR_PRODUCTO),
 		],
 		handler: createProductoController,
 	});
@@ -39,7 +40,7 @@ export default async function productoRoutes(app: FastifyInstance) {
 		preHandler: [
 			authMiddleware(),
 			roleMiddleware(rol.ADMIN),
-			permissionMiddleware(1),
+			permisoMiddleware(permiso.VER_PRODUCTO),
 		],
 		handler: obtenerProductosController,
 	});

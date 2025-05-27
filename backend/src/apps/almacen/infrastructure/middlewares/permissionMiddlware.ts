@@ -1,11 +1,11 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
-import supabase from "src/config/supabase";
+import supabaseConnection from "../db/supabaseConection";
 import { handleError } from "../../../../shared/utils/handleError";
 import { AppError } from "../../../../shared/utils/appError";
 
-export const permissionMiddleware =
-	(requiredPermission: number) =>
+export const permisoMiddleware =
+	(permisoRequerido: number) =>
 	async (request: FastifyRequest, reply: FastifyReply) => {
 		try {
 			const user = request.user;
@@ -19,11 +19,11 @@ export const permissionMiddleware =
 				);
 			}
 
-			const { data: spData, error: spError } = await supabase.rpc(
-				"sp_permission_verification",
+			const { data: spData, error: spError } = await supabaseConnection.rpc(
+				"fn_verificar_permiso",
 				{
 					p_uuid: user.id,
-					p_permission_id: requiredPermission,
+					p_permiso_id: permisoRequerido,
 				},
 			);
 
