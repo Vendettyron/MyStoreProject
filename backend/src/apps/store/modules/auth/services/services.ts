@@ -1,7 +1,8 @@
 import { AppError } from "src/shared/utils/appError";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import { Status } from "src/shared/dictionaries/statusDictionary";
-import { Role } from "src/shared/dictionaries/roles&permissionsDictionary";
+// import { Role } from "src/shared/dictionaries/roles&permissionsDictionary";
+import { role } from "src/shared/dictionaries/roles&permissionsDictionary";
 import type { RegisterClientSchemaDTO } from "../schemas/registerClientSchema";
 import supabase from "src/config/supabase";
 
@@ -13,7 +14,7 @@ export async function registerClientService(data: RegisterClientSchemaDTO) {
 			email: email,
 			password: password,
 			user_metadata: {
-				app_role: Role.CLIENT,
+				app_role: role.CLIENT,
 			},
 			email_confirm: false,
 		});

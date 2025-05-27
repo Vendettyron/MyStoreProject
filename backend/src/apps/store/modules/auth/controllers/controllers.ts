@@ -2,7 +2,9 @@ import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { RegisterClientSchemaDTO } from "../schemas/registerClientSchema";
 import { registerClientService } from "../services/services";
-import { handleControllerError } from "src/shared/utils/handleError";
+import { handleError } from "src/shared/utils/handleError";
+
+// import { handleControllerError } from "src/shared/utils/handleError";
 
 export const registerClient = async (
 	request: FastifyRequest<{ Body: RegisterClientSchemaDTO }>,
@@ -16,6 +18,7 @@ export const registerClient = async (
 			)
 			.send({ success: true, message: result.message });
 	} catch (error) {
-		handleControllerError(error, reply);
+		// handleControllerError(error, reply);
+		handleError(error, reply);
 	}
 };
