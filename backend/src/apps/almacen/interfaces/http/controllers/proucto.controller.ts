@@ -14,7 +14,16 @@ export const createProductoController = async (
 ) => {
 	try {
 		const repository = new ProductoRepository();
-		const result = await createProductoUseCase(request.body, repository);
+		if (!request.user) {
+			return reply
+				.status(HttpStatus.UNAUTHORIZED_401)
+				.send({ message: "Userio no authenticado" });
+		}
+		const result = await createProductoUseCase(
+			request.body,
+			repository,
+			request.user,
+		);
 		return reply.status(HttpStatus.CREATED_201).send(result);
 	} catch (error) {
 		return handleError(error, reply);

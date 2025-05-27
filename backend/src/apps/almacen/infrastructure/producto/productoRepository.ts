@@ -3,27 +3,40 @@ import type { Producto } from "../../domain/repositories/producto/productoEntity
 import { AppError } from "../../../../shared/utils/appError";
 import { HttpStatus } from "../../../../shared/dictionaries/httpStatusDictionary";
 import type { IProductoRepository } from "../../domain/repositories/producto/productoRepository";
-
 export class ProductoRepository implements IProductoRepository {
 	async crearProducto(
 		data: Producto,
+		user: { id: string; appRole: number },
 	): Promise<{ success: boolean; message: string }> {
 		const { nombre, descripcion, unidades } = data;
+		console.log("info usuario en crrear producto", user);
 
-		const { error: spError } = await supabaseConnection.rpc(
+		const { data: spData, error: spError } = await supabaseConnection.rpc(
 			"fn_insert_productos",
 			{
 				p_nombre: nombre,
 				p_descripcion: descripcion,
 				p_unidades: unidades,
+				p_uuid_empleado: user.id,
 			},
 		);
+
+		console.log("spData en crear producto", spData);
+		console.log("spError en crear producto", spError);
 
 		if (spError) {
 			throw new AppError(
 				"Error al registrar producto",
 				HttpStatus.INTERNAL_SERVER_ERROR_500,
 				spError.message,
+			);
+		}
+
+		if (!spData.success) {
+			throw new AppError(
+				"Error al registrar producto",
+				HttpStatus.INTERNAL_SERVER_ERROR_500,
+				spData.message || "Error desconocido",
 			);
 		}
 

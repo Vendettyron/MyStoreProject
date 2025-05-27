@@ -6,13 +6,14 @@ import { Producto } from "../../../domain/repositories/producto/productoEntity";
 export async function createProductoUseCase(
 	data: ProductoSchemaDTO,
 	repository: IProductoRepository,
+	user: { id: string; appRole: number },
 ) {
 	const producto = new Producto(
 		data.nombre,
 		data.descripcion ?? null,
 		data.unidades,
 	);
-	return await repository.crearProducto(producto);
+	return await repository.crearProducto(producto, user);
 }
 
 export async function obtenerProductosUseCase(repository: IProductoRepository) {
