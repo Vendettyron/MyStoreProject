@@ -7,11 +7,13 @@ import { roleMiddleware } from "src/shared/middlewares/roleMiddleware";
 import { basicResponseSchema } from "src/shared/schemas/messageResponseSchema";
 import type { FastifyInstance } from "fastify";
 import { createProductoController } from "../controllers/proucto.controller";
+import { createMateriaPrimaController } from "../controllers/materiaPrima.controller";
+import { MateriaPrimaSchema } from "src/apps/almacen/shared/schemas/esquemas_MateriaPrima/materiaPrima.schema";
 
 export default async function materiaPrimaRoutes(app: FastifyInstance) {
 	app.post("/crear-materia-prima", {
 		schema: {
-			body: productoSchema,
+			body: MateriaPrimaSchema,
 			response: {
 				201: basicResponseSchema,
 				500: basicResponseSchema,
@@ -20,8 +22,9 @@ export default async function materiaPrimaRoutes(app: FastifyInstance) {
 		preHandler: [
 			authMiddleware(),
 			roleMiddleware(rol.ADMIN),
-			permisoMiddleware(permiso.CREAR_PRODUCTO),
+			permisoMiddleware(permiso.CREAR_PRODUCTO), // CAMBIAR A PERMISO CORRESPONDIENTE
+			// permisoMiddleware(permiso.CREAR_MATERIA_PRIMA), // DESCOMENTAR SI SE CREA UN NUEVO PERMISO
 		],
-		handler: createProductoController,
+		handler: createMateriaPrimaController,
 	});
 }
