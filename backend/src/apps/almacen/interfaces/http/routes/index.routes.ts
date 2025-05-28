@@ -1,17 +1,10 @@
 import type { FastifyInstance } from "fastify";
 import fabricaAuthRoutes from "./authRoutes";
 import productoRoutes from "./producto.routes";
-// import materiaPrimaRoutes from './materiaPrima.routes';
+import materiaPrimaRoutes from "./materiaPrima.routes";
 
 export default async function fabricaRoutes(app: FastifyInstance) {
 	app.register(fabricaAuthRoutes, { prefix: "/auth" });
-	// app.register(productoRoutes, { prefix: "/producto" });
-	app.register(productoRoutes, { prefix: "/crear-producto" });
-	app.register(productoRoutes, { prefix: "/all" });
-	
-	// app.register(materiaPrimaRoutes, )
+	app.register(productoRoutes, { prefix: "/producto" });
+	app.register(materiaPrimaRoutes, { prefix: "/materia-prima" });
 }
-
-
-
-
