@@ -10,8 +10,6 @@ export const permisoMiddleware =
 		try {
 			const user = request.user;
 
-			console.log("User data in permission middleware:", user);
-
 			if (!user || !user.id) {
 				throw new AppError(
 					"No se ha encontrado el usuario autenticado",
@@ -26,6 +24,10 @@ export const permisoMiddleware =
 					p_permiso_id: permisoRequerido,
 				},
 			);
+
+			console.log("Resultado de la verificación de permiso:", spData);
+
+			console.log("Error de verificación de permiso:", spError);
 
 			const result = spData?.[0];
 

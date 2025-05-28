@@ -1,5 +1,6 @@
 import type { FastifyInstance } from "fastify";
-import { productoSchema } from "../../../shared/schemas/producto.schema";
+import { productoSchema } from "../../../shared/schemas/productos/producto.schema";
+import { productoModificarSchema } from "src/apps/almacen/shared/schemas/productos/crearProducto.schema";
 import { basicResponseSchema } from "src/shared/schemas/messageResponseSchema";
 import { obtenerProductosSchema } from "src/apps/almacen/shared/schemas/productos/obtenerProductos.schema";
 import { authMiddleware } from "src/apps/almacen/infrastructure/middlewares/authMiddleware";
@@ -7,10 +8,13 @@ import { roleMiddleware } from "src/apps/almacen/infrastructure/middlewares/role
 import { permisoMiddleware } from "src/apps/almacen/infrastructure/middlewares/permissionMiddlware";
 import { rol } from "src/apps/almacen/shared/diccionario/rolDiccionario";
 import { permiso } from "src/apps/almacen/shared/diccionario/permisosDiccionario";
-
+import { idSchema } from "src/shared/schemas/id.schema";
+import { nombreSchema } from "src/apps/almacen/shared/schemas/nombre.schema";
 import {
 	createProductoController,
 	obtenerProductosController,
+	obtenerProductoPorNombreController,
+	modificarProductoController,
 } from "../controllers/proucto.controller";
 
 export default async function productoRoutes(app: FastifyInstance) {
@@ -45,11 +49,37 @@ export default async function productoRoutes(app: FastifyInstance) {
 		handler: obtenerProductosController,
 	});
 
-	app.get("/:id", async (request, reply) => {
-		return reply.status(200).send({ message: "Test endpoint is working!" });
+	app.get("/buscar-por-nombre/:nombre_producto", {
+		schema: {
+			params: nombreSchema,
+			response: {
+				200: productoSchema,
+				404: basicResponseSchema,
+				500: basicResponseSchema,
+			},
+		},
+		preHandler: [
+			authMiddleware(),
+			roleMiddleware(rol.ADMIN),
+			permisoMiddleware(permiso.VER_PRODUCTO),
+		],
+		handler: obtenerProductoPorNombreController,
 	});
 
-	app.put("/modificar", async (request, reply) => {
-		return reply.status(200).send({ message: "Update endpoint is working!" });
+	app.put("/modificar-producto", {
+		schema: {
+			body: productoModificarSchema,
+			response: {
+				200: basicResponseSchema,
+				404: basicResponseSchema,
+				500: basicResponseSchema,
+			},
+		},
+		preHandler: [
+			authMiddleware(),
+			roleMiddleware(rol.ADMIN),
+			permisoMiddleware(permiso.MODIFICAR_PRODUCTO),
+		],
+		handler: modificarProductoController,
 	});
 }

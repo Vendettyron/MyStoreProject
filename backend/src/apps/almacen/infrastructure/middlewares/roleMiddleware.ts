@@ -20,8 +20,6 @@ export const roleMiddleware =
 					HttpStatus.FORBIDDEN_403,
 				);
 			}
-
-			console.log("Rol del usuario verificado correctamente:");
 		} catch (err) {
 			handleError(err, reply);
 		}

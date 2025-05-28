@@ -10,4 +10,11 @@ export interface IProductoRepository {
 		message: string;
 		data?: object;
 	}>;
+	obtenerProductoPorNombre(
+		nombre_producto: string,
+	): Promise<{ success: boolean; message: string; data?: object }>;
+	modificarProducto(
+		data: Producto,
+		user: { id: string; appRole: number },
+	): Promise<{ success: boolean; message: string; data?: object }>;
 }

@@ -3,4 +3,5 @@ export const permiso = {
 	VER_PRODUCTO: 9,
 	CREAR_MATERIA_PRIMA: 10,
 	VER_MATERIA_PRIMA: 11,
+	MODIFICAR_PRODUCTO: 12,
 };
