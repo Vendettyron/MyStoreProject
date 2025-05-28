@@ -10,4 +10,4 @@ export const MateriaPrimaSchema = Type.Object({
     fecha_creacion: Type.Optional(Type.String({ format: "date-time" })), 
 });
 
-export type MateriaPrima = Static<typeof MateriaPrimaSchema>;
+export type MateriaPrimaSchemaDTO = Static<typeof MateriaPrimaSchema>;
