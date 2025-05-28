@@ -4,7 +4,7 @@ import { MateriaPrima } from "../../shared/schemas/materiaPrima.schema";
 import supabaseConnection from "../db/supabaseConection";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 
-
+/*
 
 export class MateriaPrimaRepository implements IMateriaPrimaRepository {
     async crearMateriaPrima(
@@ -47,16 +47,4 @@ export class MateriaPrimaRepository implements IMateriaPrimaRepository {
     }
 }
 
-
-// Así luce la estructura de la entidad MateriaPrima en el dominio, que se usa en el repositorio:
-/*
-export class MateriaPrima {
-    constructor(
-        public readonly nombre: string,
-        public readonly descripcion: string | null,
-        public readonly unidad_medida: string,
-        public readonly stock_actual: number,
-        public readonly stock_minimo: number,
-        public readonly fecha_creacion?: Date,
-    ) 
-        */
+*/
