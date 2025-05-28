@@ -108,12 +108,15 @@ export class ProductoRepository implements IProductoRepository {
 			"fn_update_productos",
 			{
 				p_id: id,
+				p_usuario: user.id,
 				p_nombre: nombre,
 				p_descripcion: descripcion,
 				p_unidades: unidades,
-				p_uuid_empleado: user.id,
 			},
 		);
+
+		console.log("Resultado de la modificación de producto:", spData);
+		console.log("Error de la modificación de producto:", spError);
 
 		if (spError) {
 			throw new AppError(
