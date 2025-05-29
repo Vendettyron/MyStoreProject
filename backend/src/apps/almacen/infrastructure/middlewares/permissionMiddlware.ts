@@ -24,7 +24,7 @@ export const permisoMiddleware =
 			const { data: spData, error: spError } = await supabaseConnection.rpc(
 				"fn_verificar_permiso",
 				{
-					p_uuid: user?.id,
+					p_uuid: user.id,
 					p_permiso_id: permisoRequerido,
 				},
 			);

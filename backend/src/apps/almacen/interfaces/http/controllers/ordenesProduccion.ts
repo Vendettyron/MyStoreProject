@@ -31,6 +31,11 @@ export const planificarOrdenProduccionController = async (
 				message: result.message,
 			});
 		}
+
+		return reply.status(HttpStatus.CREATED_201).send({
+			success: result.success,
+			message: result.message,
+		});
 	} catch (error) {
 		return handleError(error, reply);
 	}
