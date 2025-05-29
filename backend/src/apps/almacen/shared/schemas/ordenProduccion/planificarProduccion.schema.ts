@@ -9,7 +9,6 @@ export const planificarProducionSchema = Type.Object({
 	fecha_fin_planeada: Type.String({ format: "date-time" }),
 	fecha_inicio_real: Type.Optional(Type.String({ format: "date-time" })),
 	fecha_fin_real: Type.Optional(Type.String({ format: "date-time" })),
-	fecha_creacion: Type.Optional(Type.String({ format: "date-time" })),
 });
 
 export type planificarProducionSchemaDTO = Static<

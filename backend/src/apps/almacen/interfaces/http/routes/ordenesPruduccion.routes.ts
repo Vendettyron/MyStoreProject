@@ -6,6 +6,7 @@ import { permiso } from "src/apps/almacen/shared/diccionario/permisosDiccionario
 import { authMiddleware } from "src/apps/almacen/infrastructure/middlewares/authMiddleware";
 import { roleMiddleware } from "src/apps/almacen/infrastructure/middlewares/roleMiddleware";
 import { permisoMiddleware } from "src/apps/almacen/infrastructure/middlewares/permissionMiddlware";
+import { planificarOrdenProduccionController } from "../controllers/ordenesProduccion";
 
 export default async function ordenesProduccionRoutes(app: FastifyInstance) {
 	app.post("/planificar-orden-produccion", {
@@ -21,6 +22,6 @@ export default async function ordenesProduccionRoutes(app: FastifyInstance) {
 			roleMiddleware(rol.ADMIN),
 			permisoMiddleware(permiso.PLANIFICAR_ORDEN_PRODUCCION),
 		],
-		handler: 
+		handler: planificarOrdenProduccionController,
 	});
 }
