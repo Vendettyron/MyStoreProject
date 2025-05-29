@@ -1,12 +1,15 @@
 
 export class MateriaPrima {
+
     constructor(
+
         public readonly nombre: string,
         public readonly descripcion: string,
         public readonly unidad_medida: string,
         public readonly stock_actual: number,
         public readonly stock_minimo: number,
         public readonly fecha_creacion?: Date,
+        public readonly id?: number
     ) {
         if (!nombre || nombre.trim().length === 0) {
             throw new Error("El nombre de la materia prima es obligatorio.");

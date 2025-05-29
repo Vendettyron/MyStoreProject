@@ -10,4 +10,8 @@ export interface IMateriaPrimaRepository {
 		message: string;
 		data?: object;
 	}>;
+	modificarMateriaPrima(
+		data: MateriaPrima,
+		user: { id: string; appRole: number },
+	): Promise<{ success: boolean; message: string; data?: object }>;
 }
