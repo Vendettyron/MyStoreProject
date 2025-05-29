@@ -43,4 +43,28 @@ export class MateriaPrimaRepository implements IMateriaPrimaRepository {
 			// id: spData?.id,
 		};
 	}
+
+	async obtenerMateriasPrimas(): Promise<{
+		success: boolean;
+		message: string;
+		data?: object;
+	}> {
+		const { error: spError, data: spData } = await supabaseConnection.rpc(
+			"fn_get_materia_prima_all",
+		);
+
+		if (spError) {
+			throw new AppError(
+				"Error al obtener materias primas",
+				HttpStatus.INTERNAL_SERVER_ERROR_500,
+				spError.message,
+			);
+		}
+
+		return {
+			success: true,
+			message: "Materias primas obtenidas exitosamente",
+			data: spData,
+		};
+	}
 }

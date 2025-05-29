@@ -19,3 +19,6 @@ export async function createMateriaPrimaUseCase(
     return await repository.crearMateriaPrima(materiaPrima, user);
 }
 
+export async function obtenerMateriasPrimasUseCase(repository: IMateriaPrimaRepository,) {
+    return await repository.obtenerMateriasPrimas();
+}

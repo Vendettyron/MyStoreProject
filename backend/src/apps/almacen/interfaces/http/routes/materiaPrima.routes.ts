@@ -7,8 +7,9 @@ import { roleMiddleware } from "src/shared/middlewares/roleMiddleware";
 import { basicResponseSchema } from "src/shared/schemas/messageResponseSchema";
 import type { FastifyInstance } from "fastify";
 import { createProductoController } from "../controllers/proucto.controller";
-import { createMateriaPrimaController } from "../controllers/materiaPrima.controller";
+import { createMateriaPrimaController, obtenerMateriasPrimasController } from "../controllers/materiaPrima.controller";
 import { MateriaPrimaSchema } from "src/apps/almacen/shared/schemas/esquemas_MateriaPrima/materiaPrima.schema";
+import { obtenerMateriasPrimasSchema } from "src/apps/almacen/shared/schemas/esquemas_MateriaPrima/obtenerMateriasPrimas.schema";
 
 export default async function materiaPrimaRoutes(app: FastifyInstance) {
 	app.post("/crear-materia-prima", {
@@ -27,4 +28,21 @@ export default async function materiaPrimaRoutes(app: FastifyInstance) {
 		],
 		handler: createMateriaPrimaController,
 	});
+
+	app.get("/all", {
+		schema: {
+			response: {
+				200: obtenerMateriasPrimasSchema,
+				500: basicResponseSchema,
+			},
+		},
+		preHandler: [
+			authMiddleware(),
+			roleMiddleware(rol.ADMIN),
+			permisoMiddleware(permiso.VER_PRODUCTO), // CAMBIAR A PERMISO CORRESPONDIENTE
+			// permisoMiddleware(permiso.VER_MATERIA_PRIMA), // DESCOMENTAR SI SE CREA UN NUEVO PERMISO
+		],
+		handler: obtenerMateriasPrimasController, // DEBE SER EL CONTROLADOR CORRESPONDIENTE
+	});
+
 }
