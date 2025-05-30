@@ -8,7 +8,6 @@ import { roleMiddleware } from "src/apps/almacen/infrastructure/middlewares/role
 import { permisoMiddleware } from "src/apps/almacen/infrastructure/middlewares/permissionMiddlware";
 import { rol } from "src/apps/almacen/shared/diccionario/rolDiccionario";
 import { permiso } from "src/apps/almacen/shared/diccionario/permisosDiccionario";
-import { idSchema } from "src/shared/schemas/id.schema";
 import { nombreSchema } from "src/apps/almacen/shared/schemas/nombre.schema";
 import {
 	createProductoController,

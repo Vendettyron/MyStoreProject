@@ -48,6 +48,7 @@ export const createPermission = async (
 ) => {
 	try {
 		const data = await createPermissionService(request.body);
+
 		reply.status(HttpStatus.OK_200).send({
 			success: data.success,
 			message: data.message,
