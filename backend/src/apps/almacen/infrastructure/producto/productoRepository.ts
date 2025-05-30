@@ -3,6 +3,18 @@ import type { Producto } from "../../domain/repositories/producto/productoEntity
 import { AppError } from "../../../../shared/utils/appError";
 import { HttpStatus } from "../../../../shared/dictionaries/httpStatusDictionary";
 import type { IProductoRepository } from "../../domain/repositories/producto/productoRepository";
+
+/**
+ * Implementación concreta del repositorio de productos.
+ *
+ * Este archivo pertenece a la capa de infraestructura en Clean Architecture.
+ * Su función es interactuar con la base de datos (aquí usando Supabase) para realizar operaciones CRUD sobre productos.
+ * Implementa la interfaz del repositorio definida en el dominio, separando la lógica de acceso a datos de la lógica de negocio.
+ *
+ * Cumple con Clean Architecture porque desacopla la lógica de persistencia del dominio,
+ * permitiendo cambiar la tecnología de base de datos sin afectar la lógica central del sistema.
+ */
+
 export class ProductoRepository implements IProductoRepository {
 	async crearProducto(
 		data: Producto,
