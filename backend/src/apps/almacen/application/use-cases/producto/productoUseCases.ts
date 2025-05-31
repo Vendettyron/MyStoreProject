@@ -4,6 +4,7 @@ import { ProductoRepository } from "../../../infrastructure/producto/productoRep
 import type { NombreSchemaDTO } from "src/apps/almacen/shared/schemas/nombre.schema";
 import type { IProductoRepository } from "src/apps/almacen/domain/repositories/producto/productoRepository";
 import { Producto } from "../../../domain/repositories/producto/productoEntity";
+import { CrearProductoSchemaDTO } from "src/apps/almacen/shared/schemas/productos/crearProducto.schema";
 
 /**
  * Casos de uso para productos.
@@ -21,14 +22,14 @@ import { Producto } from "../../../domain/repositories/producto/productoEntity";
  */
 
 export async function createProductoUseCase(
-	data: ProductoSchemaDTO,
+	data: CrearProductoSchemaDTO,
 	repository: IProductoRepository,
 	user: { id: string; appRole: number },
 ) {
 	const producto = new Producto(
-		data.data.nombre,
-		data.data.descripcion ?? null,
-		data.data.unidades,
+		data.nombre,
+		data.descripcion ?? null,
+		data.unidades,
 	);
 	return await repository.crearProducto(producto, user);
 }

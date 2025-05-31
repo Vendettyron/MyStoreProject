@@ -1,11 +1,10 @@
 import { Type } from "@sinclair/typebox";
 import type { Static } from "@sinclair/typebox";
 
-export const Schema = Type.Object({
-    id: Type.Integer(),
+export const crearProductoSchema = Type.Object({
     nombre: Type.String({ minLength: 1 }),
     descripcion: Type.Optional(Type.String()),
     unidades: Type.Integer({}),
 });
 
-export type ProductoModificarSchemaDTO = Static<typeof productoModificarSchema>;
+export type CrearProductoSchemaDTO = Static<typeof crearProductoSchema>;

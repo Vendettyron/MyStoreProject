@@ -21,7 +21,8 @@ export class ProductoRepository implements IProductoRepository {
 		user: { id: string; appRole: number },
 	): Promise<{ success: boolean; message: string }> {
 		const { nombre, descripcion, unidades } = data;
-		console.log("info usuario en crear producto", user);
+		console.log("info en data",data);
+
 
 		const { data: spData, error: spError } = await supabaseConnection.rpc(
 			"fn_insert_productos",
@@ -50,8 +51,8 @@ export class ProductoRepository implements IProductoRepository {
 		}
 
 		return {
-			success: true,
-			message: "Producto registrado exitosamente",
+			success: spData.success,
+			message: spData.message,
 		};
 	}
 

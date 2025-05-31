@@ -2,6 +2,7 @@
 import type { FastifyInstance } from "fastify";
 import { productoSchema } from "../../../shared/schemas/productos/producto.schema";
 import { productoModificarSchema } from "src/apps/almacen/shared/schemas/productos/modificarProducto.schema";
+import { crearProductoSchema } from "src/apps/almacen/shared/schemas/productos/crearProducto.schema";
 import { basicResponseSchema } from "src/shared/schemas/messageResponseSchema";
 import { obtenerProductosSchema } from "src/apps/almacen/shared/schemas/productos/obtenerProductos.schema";
 import { authMiddleware } from "src/apps/almacen/infrastructure/middlewares/authMiddleware";
@@ -29,7 +30,7 @@ export default async function productoRoutes(app: FastifyInstance) {
     app.post("/crear-producto", {
         // Validación de la petición y respuesta usando esquemas (capa de validación)
         schema: {
-            body: productoModificarSchema,
+            body: crearProductoSchema,
             response: {
                 201: basicResponseSchema,
                 500: basicResponseSchema,

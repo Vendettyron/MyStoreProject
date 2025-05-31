@@ -12,6 +12,7 @@ import {
 import { handleError } from "../../../../../shared/utils/handleError";
 import { HttpStatus } from "src/shared/dictionaries/httpStatusDictionary";
 import { ProductoRepository } from "src/apps/almacen/infrastructure/producto/productoRepository";
+import { CrearProductoSchemaDTO } from "src/apps/almacen/shared/schemas/productos/crearProducto.schema";
 
 /**
  * Controladores HTTP para productos.
@@ -27,7 +28,7 @@ import { ProductoRepository } from "src/apps/almacen/infrastructure/producto/pro
  */
 
 export const createProductoController = async (
-    request: FastifyRequest<{ Body: ProductoSchemaDTO }>,
+    request: FastifyRequest<{ Body: CrearProductoSchemaDTO }>,
     reply: FastifyReply,
 ) => {
     try {
