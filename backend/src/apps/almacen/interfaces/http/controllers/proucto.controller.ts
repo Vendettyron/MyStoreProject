@@ -1,7 +1,7 @@
 import type { FastifyRequest, FastifyReply } from "fastify";
 import type { ProductoSchemaDTO } from "../../../shared/schemas/productos/producto.schema";
 import type { NombreSchemaDTO } from "src/apps/almacen/shared/schemas/nombre.schema";
-import type { ProductoModificarSchemaDTO } from "src/apps/almacen/shared/schemas/productos/crearProducto.schema";
+import type { ProductoModificarSchemaDTO } from "src/apps/almacen/shared/schemas/productos/modificarProducto.schema";
 import type { idSchemaDTO } from "src/shared/schemas/id.schema";
 import {
     createProductoUseCase,

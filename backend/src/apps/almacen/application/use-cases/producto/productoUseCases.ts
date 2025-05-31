@@ -1,5 +1,5 @@
 import type { ProductoSchemaDTO } from "../../../shared/schemas/productos/producto.schema";
-import type { ProductoModificarSchemaDTO } from "src/apps/almacen/shared/schemas/productos/crearProducto.schema";
+import type { ProductoModificarSchemaDTO } from "src/apps/almacen/shared/schemas/productos/modificarProducto.schema";
 import { ProductoRepository } from "../../../infrastructure/producto/productoRepository";
 import type { NombreSchemaDTO } from "src/apps/almacen/shared/schemas/nombre.schema";
 import type { IProductoRepository } from "src/apps/almacen/domain/repositories/producto/productoRepository";

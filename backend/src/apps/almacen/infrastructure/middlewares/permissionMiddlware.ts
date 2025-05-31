@@ -10,10 +10,7 @@ export const permisoMiddleware =
 		try {
 			const user = request.user;
 
-			console.log("Usuario autenticado:", user);
-			console.log("usuairio id", user?.id);
-			console.log("Permiso requerido:", permisoRequerido);
-
+			
 			if (!user || !user.id) {
 				throw new AppError(
 					"No se ha encontrado el usuario autenticado",
